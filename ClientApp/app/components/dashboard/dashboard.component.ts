@@ -19,5 +19,6 @@ export class DashboardComponent implements OnInit {
 
     private async getHeroes() {
         this.heroes = (await this.heroService.getHeroes()).slice(1, 5);
+        console.log(JSON.stringify(this.heroes));
     }
 }
