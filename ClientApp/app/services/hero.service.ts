@@ -24,4 +24,9 @@ export class HeroService {
             setTimeout(() => resolve(HEROES), 2000);
         });
     }
+
+    async getHero(id: number) {
+        var heroes = await this.getHeroes();
+        return heroes.find(x => x.id === id);
+    }
 }

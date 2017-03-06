@@ -7,6 +7,7 @@ import { HeroDetailComponent } from "./components/hero-detail/hero-detail.compon
 import { HeroesComponent } from "./components/heroes/heroes.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { HeroService } from "./services/hero.service";
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -19,21 +20,7 @@ import { HeroService } from "./services/hero.service";
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         FormsModule,
-        RouterModule.forRoot([
-            {
-                path: 'heroes',
-                component: HeroesComponent,
-            },
-            {
-                path: 'dashboard',
-                component: DashboardComponent,
-            },
-            {
-                path: '',
-                redirectTo: '/dashboard',
-                pathMatch: 'full',
-            }
-        ]),
+        AppRoutingModule,
     ],
     providers: [HeroService],
 })
