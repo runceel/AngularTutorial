@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Hero } from "../../models/hero";
 import { HeroService } from "../../services/hero.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from '@angular/common';
+
+import 'rxjs/add/operator/switchMap';
 
 @Component({
     moduleId: module.id + '',
@@ -16,19 +18,19 @@ export class HeroDetailComponent implements OnInit {
         private location: Location
     ) { }
 
-    @Input()
     hero: Hero;
 
     ngOnInit() { 
-        this.getHeroById();
+        this.route.params.subscribe((params: Params) => {
+            this.getHeroById(+params['id']);
+        });
     }
 
     goBack() {
         this.location.back();
     }
 
-    private async getHeroById() {
-        var id = +this.route.params['id'];
+    private async getHeroById(id: number) {
         this.hero = await this.heroService.getHero(id);
     }
 }
