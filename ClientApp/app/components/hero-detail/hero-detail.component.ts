@@ -30,6 +30,11 @@ export class HeroDetailComponent implements OnInit {
         this.location.back();
     }
 
+    async save() {
+        await this.heroService.update(this.hero);
+        this.goBack();
+    }
+
     private async getHeroById(id: number) {
         this.hero = await this.heroService.getHero(id);
     }

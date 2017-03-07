@@ -28,13 +28,42 @@ namespace AngularTutorial.Controllers
             return Json(Heroes);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "HeroesLink")]
         public ActionResult GetById(int id)
         {
             var hero = Heroes.FirstOrDefault(x => x.Id == id);
             if (hero == null) { return NotFound(); }
 
             return Json(hero);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody]Hero hero) 
+        {
+            var target = Heroes.FirstOrDefault(x => x.Id == id);
+            if (target == null) { return NotFound(); }
+
+            target.Name = hero.Name;
+            return Ok(target);
+        }
+
+        [HttpPost]
+        public ActionResult Post([FromBody]Hero hero)
+        {
+            var newId = Heroes.Max(x => x.Id) + 1;
+            hero.Id = newId;
+            Heroes.Add(hero);
+            return CreatedAtRoute("HeroesLink",  routeValues: new { id = hero.Id }, value: hero);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var target = Heroes.FirstOrDefault(x => x.Id == id);
+            if (target == null) { return NotFound(); }
+
+            Heroes.Remove(target);
+            return Ok();
         }
     }
 }
