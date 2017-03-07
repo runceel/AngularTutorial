@@ -23,8 +23,13 @@ namespace AngularTutorial.Controllers
         };
 
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult Get(string name = null)
         {
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                return Json(Heroes.Where(x => x.Name.IndexOf(name) != -1));
+            }
+
             return Json(Heroes);
         }
 
